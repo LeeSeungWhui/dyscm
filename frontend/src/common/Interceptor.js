@@ -5,9 +5,11 @@ import * as AppConfig from './config'
 
 // 라우트 변경을 추적하는 컴포넌트
 function Interceptor() {
+    /* 1. 변수 및 state 선언------------------------------------------------------------------------------------------------------------------------------------------------*/
     const location = useLocation();
-    const { bizListState, setBizListState, itemListState, setItemListState } = useBizInfoContext();
+    const { bizListState, setBizListState, setHeaderLoadState } = useBizInfoContext();
 
+    /* 2. state간 연결------------------------------------------------------------------------------------------------------------------------------------------------*/
     useEffect(() => {
         if (location.pathname != '/dyscm/member/signUp' && location.pathname != '/' && location.pathname != '/dyscm/login') {
             // 헤더 셀렉트 박스 생성
@@ -16,17 +18,16 @@ function Interceptor() {
         console.log("라우트가 변경되었습니다:", location.pathname);
     }, [location]);
 
+    /* 3. 함수 선언 ------------------------------------------------------------------------------------------------------------------------------------------------*/
     async function makeHeaderData() {
         try {
+            setHeaderLoadState(true);
             const result = await AppConfig.ajax('/dyscm/common/makeHeaderDataProc.do', 'GET', undefined)
+            setHeaderLoadState(false);
             if (result.code === "SUCC") {
-                const newBizListState = result.data['bizList'];
-                const newItemListState = result.data['itemList'];
+                const newBizListState = result.data;
                 if (!arraysEqual(bizListState, newBizListState)) {
                     setBizListState(newBizListState);
-                }
-                if (!arraysEqual(itemListState, newItemListState)) {
-                    setItemListState(newItemListState);
                 }
             } else {
                 alert(result.msg);
@@ -45,6 +46,9 @@ function Interceptor() {
         return true;
     }
 
+    /* 4. 이벤트핸들러------------------------------------------------------------------------------------------------------------------------------------------------*/
+    /* 5. 동적 컴포넌트------------------------------------------------------------------------------------------------------------------------------------------------*/
+    /* 6. 화면 출력------------------------------------------------------------------------------------------------------------------------------------------------*/
     return null; // UI를 렌더링하지 않습니다.
 }
 

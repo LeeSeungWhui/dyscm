@@ -5,6 +5,7 @@ import Interceptor from './common/Interceptor';
 import Login from './login/Login';
 import SignUp from './member/SignUp';
 import Main from './main/Main';
+import BoxOrder from './order/BoxOrder';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Route path="/dyscm/login" element={<Login />} />
           <Route path="/dyscm/member/signUp" element={<SignUp />} />
           <Route path="/dyscm/main" element={<Main />} />
+          <Route path="/dyscm/order/boxOrder" element={<BoxOrder />} />
           <Route path="/" element={<Navigate replace to="/dyscm/login" />} />
         </Routes>
       </Router>

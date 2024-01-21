@@ -1,28 +1,29 @@
 import React from 'react';
-import { InputContainer } from './container';
+import * as AppConfig from '../config'
 
-const InputArea = React.forwardRef(({ items, children, scrollRef, focusRef }, ref) => {
+export const AppLabel = ({ text, backgroundColor, color, border, fontSize, onClick }) => {
     /* 1. 변수 및 state 선언------------------------------------------------------------------------------------------------------------------------------------------------*/
-    // 화면에 보여줄 데이터 목록(visible true로 설정된 것만 보여줌)
-    const visibleItems = Array.from(items).filter(([, value]) => value.inputVisible);
-
+    // 인라인 스타일을 사용하여 텍스트 레이블의 스타일을 정의합니다.
+    const style = {
+        display: 'inline-block',
+        backgroundColor: backgroundColor || AppConfig.APP_THEME_COLOR,
+        boder: border || 'transparent',
+        color: color || 'white',
+        fontSize: fontSize || '17px',
+        fontWeight: 'bold',
+        padding: '3px 7px 3px 7px',
+        borderRadius: '15px',
+        whiteSpace: 'nowrap',
+        cursor: onClick ? 'pointer' : 'default', // onClick이 제공되면 포인터 커서를 사용합니다.
+    };
     /* 2. state간 연결------------------------------------------------------------------------------------------------------------------------------------------------*/
     /* 3. 함수 선언 ------------------------------------------------------------------------------------------------------------------------------------------------*/
     /* 4. 이벤트핸들러------------------------------------------------------------------------------------------------------------------------------------------------*/
     /* 5. 동적 컴포넌트------------------------------------------------------------------------------------------------------------------------------------------------*/
     /* 6. 화면 출력------------------------------------------------------------------------------------------------------------------------------------------------*/
     return (
-        <div>
-            {visibleItems.map(([key, data], index) => (
-                <div ref={scrollRef[key]} key={key}>
-                    <InputContainer ref={scrollRef[key]} key={key} title={data.title} description={data.description}
-                        currentRecord={index + 1} totalRecords={visibleItems.length}>
-                        {children && children(key, data, focusRef[key])}
-                    </InputContainer>
-                </div>
-            ))}
-        </div>
+        <span style={style} onClick={onClick}>
+            {text}
+        </span>
     );
-});
-
-export default InputArea;
+};

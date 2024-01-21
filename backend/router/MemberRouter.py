@@ -11,8 +11,8 @@ router = APIRouter()
 @router.post("/dyscm/member/loginProc.do")
 async def loginProc(request: Request, response: Response, param: dict = Body(...)):
     try:
-        dbManager = dbManagers.get('mariaDb')
-        loginResult = await MemberService(dbManager).loginCheckProc(param)
+        memberService = MemberService.getInstance(dbManagers.get('mariaDb'))
+        loginResult = await memberService.loginCheckProc(param)
         if loginResult["code"] == "SUCC":
             # 세션 설정
             request.session['ID_MEMBER'] = loginResult["data"]["ID_MEMBER"]
@@ -43,8 +43,8 @@ async def loginProc(request: Request, response: Response, param: dict = Body(...
 @router.post("/dyscm/member/signUp/searchPartnerProc.do")
 async def searchPartnerProc(request: Request, response: Response, param: dict = Body(...)):
     try:
-        dbManager = dbManagers.get('mariaDb')
-        result = await MemberService(dbManager).searchPartnerProc(param)
+        memberService = MemberService.getInstance(dbManagers.get('mariaDb'))
+        result = await memberService.searchPartnerProc(param)
         return result
     except Exception as e:
         logger.exception("예외 발생...")
@@ -60,8 +60,8 @@ async def searchPartnerProc(request: Request, response: Response, param: dict = 
 @router.post("/dyscm/member/signUp/searchCompanyListProc.do")
 async def searchCompanyListProc(request: Request, response: Response, param: dict = Body(...)):
     try:
-        dbManager = dbManagers.get('mariaDb')
-        result = await MemberService(dbManager).searchCompanyListProc(param)
+        memberService = MemberService.getInstance(dbManagers.get('mariaDb'))
+        result = await memberService.searchCompanyListProc(param)
         return result
     except Exception as e:
         logger.exception("예외 발생...")
@@ -77,8 +77,8 @@ async def searchCompanyListProc(request: Request, response: Response, param: dic
 @router.post("/dyscm/member/signUp/idCheckProc.do")
 async def idCheckProc(request: Request, response: Response, param: dict = Body(...)):
     try:
-        dbManager = dbManagers.get('mariaDb')
-        result = await MemberService(dbManager).idCheckProc(param)
+        memberService = MemberService.getInstance(dbManagers.get('mariaDb'))
+        result = await memberService.idCheckProc(param)
         return result
     except Exception as e:
         logger.exception("예외 발생...")
@@ -94,8 +94,8 @@ async def idCheckProc(request: Request, response: Response, param: dict = Body(.
 @router.post("/dyscm/member/signUp/signUpProc.do")
 async def signUpProc(request: Request, response: Response, param: dict = Body(...)):
     try:
-        dbManager = dbManagers.get('mariaDb')
-        result = await MemberService(dbManager).signUpProc(param)
+        memberService = MemberService.getInstance(dbManagers.get('mariaDb'))
+        result = await memberService.signUpProc(param)
         return result
     except Exception as e:
         logger.exception("예외 발생...")

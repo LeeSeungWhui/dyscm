@@ -4,6 +4,14 @@ import bcrypt
 
 
 class MemberService:
+    _instance = None
+
+    @classmethod
+    def getInstance(cls, dbManager: DatabaseManager):
+        if cls._instance is None:
+            cls._instance = cls(dbManager)
+        return cls._instance
+
     def __init__(self, dbManager: DatabaseManager):
         self.dbManager = dbManager
 

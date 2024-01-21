@@ -2,37 +2,33 @@ import React from 'react';
 import * as Basic from './basic'
 import { ListGroup } from 'react-bootstrap';
 
-const LeftSidebar = ({ listItems, onItemClick, start = 0, end = 0 }) => {
-  const itemsArray = Array.from(listItems);
+const LeftSidebar = ({ items, onItemClick }) => {
+  /* 1. 변수 및 state 선언------------------------------------------------------------------------------------------------------------------------------------------------*/
+  const visibleItems = Array.from(items).filter(([, value]) => value.listVisible);
 
-  // 범위 계산
-  // start와 end 둘 다 0이면 모든 아이템을 순회
-  // start만 지정된 경우(end가 0인 경우), start부터 모든 아이템을 순회
-  // start와 end 둘 다 지정된 경우, 해당 범위 내의 아이템만을 순회
-  const startIndex = Math.max(start, 0);
-  const endIndex = end > 0 ? Math.min(end, itemsArray.length) : itemsArray.length;
-
-  // 필터링된 메뉴 아이템
-  const filteredItems = itemsArray.slice(startIndex, endIndex);
-
+  /* 2. state간 연결------------------------------------------------------------------------------------------------------------------------------------------------*/
+  /* 3. 함수 선언 ------------------------------------------------------------------------------------------------------------------------------------------------*/
+  /* 4. 이벤트핸들러------------------------------------------------------------------------------------------------------------------------------------------------*/
   function handleListItemClick(key) {
     onItemClick(key);
   }
 
+  /* 5. 동적 컴포넌트------------------------------------------------------------------------------------------------------------------------------------------------*/
+  /* 6. 화면 출력------------------------------------------------------------------------------------------------------------------------------------------------*/
   return (
     <ListGroup as="ul" className="d-flex flex-column" >
-      {filteredItems.map(([key, { title, value, listVisible, description, type, color = 'lightgrey' }]) => (
-        listVisible && (
-          <ListGroup.Item style={{ height: '75px', cursor: 'pointer', borderRadius: '0px' }} as="li" key={key} className="d-flex justify-content-between align-items-center" onClick={() => handleListItemClick(key)}>
-            <div className="ms-2 me-auto">
-              <div className="fw-bold">{title}</div>
-            </div>
-            <span style={{ fontSize: '14px', fontWeight: 'bold', color: color, display: 'inline-block', width: '60%', textAlign: 'right', marginRight: '10px' }}>
-              {value ? (type === 'password' ? '•'.repeat(value.length) : value) : description}
-            </span>
-            <img src="/resource/images/icons/ic-anchor-process.svg" alt="" />
-          </ListGroup.Item>
-        )
+      {visibleItems.map(([key, { title, value, description, type, useBorder = 'true', useImage = 'true', color = 'lightgrey' }]) => (
+        <ListGroup.Item as="li" key={key} className="d-flex justify-content-between align-items-center" onClick={() => handleListItemClick(key)}
+          style={{ height: useBorder ? '75px' : '45px', cursor: 'pointer', borderRadius: '0px', border: `${useBorder ? 'undefined' : 'transparent'}` }}>
+          <div className="ms-2 me-auto">
+            <div className="fw-bold">{title}</div>
+          </div>
+          <span style={{ fontSize: '14px', fontWeight: 'bold', color: color, display: 'inline-block', width: '60%', textAlign: 'right', marginRight: '10px' }}>
+            {value ? (type === 'password' ? '•'.repeat(value.length) : value) : description}
+          </span>
+          {useImage &&
+            <img src="/resource/images/icons/ic-anchor-process.svg" alt="" />}
+        </ListGroup.Item>
       ))}
     </ListGroup>
   );

@@ -9,9 +9,10 @@ if (window.location.hostname === 'localhost') {
   apiEndpoint = '';
 }
 
-export const APP_THEME_COLOR = '#17BE94'
+export const APP_THEME_COLOR = '#17BE94';
+export const APP_SUB_COLOR = '#009DE1';
 export const APP_SHADOW_COLOR = lightenColor(APP_THEME_COLOR, 0.7);
-export const APP_BACKGROUND_COLOR = '#F5F6F6'
+export const APP_BACKGROUND_COLOR = '#F5F6F6';
 
 export const API_ENDPOINT = apiEndpoint;
 

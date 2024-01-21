@@ -4,7 +4,7 @@ import { AppSelect } from '../basic/AppSelect';
 import { AppMap } from '../basic/AppMap';
 
 export function SelectContainer({ items, valueAttr, labelAttr, defaultOption, placeholder, onSelectChange, ...props }) {
-
+    /* 1. 변수 및 state 선언------------------------------------------------------------------------------------------------------------------------------------------------*/
     // type속성이 select인 것만 필터링
     let selectItems = [];
     if (items instanceof AppMap) {
@@ -35,15 +35,19 @@ export function SelectContainer({ items, valueAttr, labelAttr, defaultOption, pl
     // 현재 값 설정
     const currentValue = selectState ? optionItems.find(item => item.value === selectState.value) : undefined;
 
+    /* 2. state간 연결------------------------------------------------------------------------------------------------------------------------------------------------*/
+    /* 3. 함수 선언 ------------------------------------------------------------------------------------------------------------------------------------------------*/
+    /* 4. 이벤트핸들러------------------------------------------------------------------------------------------------------------------------------------------------*/
     const handleOnChange = (selectedOption) => {
         // 셀렉트 값 변경
         setSelectState(selectedOption);
         onSelectChange(selectedOption);
     }
-
+    /* 5. 동적 컴포넌트------------------------------------------------------------------------------------------------------------------------------------------------*/
+    /* 6. 화면 출력------------------------------------------------------------------------------------------------------------------------------------------------*/
     return (
         <div>
-            <AppSelect placeholder={placeholder} options={optionItems} defaultOption={defaultOption} onChange={handleOnChange} value={currentValue} {...props} />
+            <AppSelect isSearchable={false} placeholder={placeholder} options={optionItems} defaultOption={defaultOption} onChange={handleOnChange} value={currentValue} {...props} />
         </div>
     )
 }
