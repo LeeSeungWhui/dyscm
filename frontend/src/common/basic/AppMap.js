@@ -18,6 +18,31 @@ export class AppMap {
         return this.data.get(key);
     }
 
+    setAt(index, newKey, newValue) {
+        if (index >= 0 && index < this.order.length) {
+            const oldKey = this.order[index];
+
+            // 기존 키를 새 키로 업데이트
+            this.order[index] = newKey;
+
+            // Map에서 기존 키의 데이터를 삭제하고 새 키와 값으로 설정
+            const newData = new Map(this.data);
+            newData.delete(oldKey);
+            newData.set(newKey, newValue);
+
+            return new AppMap(Array.from(newData.entries()));
+        }
+        return this;
+    }
+
+    getAt(index) {
+        if (index >= 0 && index < this.order.length) {
+            const key = this.order[index];
+            return this.data.get(key);
+        }
+        return undefined; // 인덱스가 범위 밖인 경우
+    }
+
     toJSON() {
         return Array.from(this.data.entries()).reduce((obj, [key, value]) => {
             obj[key] = value;
@@ -30,6 +55,10 @@ export class AppMap {
             obj[key] = value[attrInValue];
             return obj;
         }, {});
+    }
+
+    static fromArray(jsonArray) {
+        return new AppMap(jsonArray);
     }
 
     static fromJsonArray(jsonObject) {

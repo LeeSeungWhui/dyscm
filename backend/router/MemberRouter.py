@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Body, Request, Response
-from common.Database import dbManagers
 from service.MemberService import MemberService
 from common.Logger import logger
 
@@ -11,7 +10,7 @@ router = APIRouter()
 @router.post("/dyscm/member/loginProc.do")
 async def loginProc(request: Request, response: Response, param: dict = Body(...)):
     try:
-        memberService = MemberService.getInstance(dbManagers.get('mariaDb'))
+        memberService = MemberService.getInstance()
         loginResult = await memberService.loginCheckProc(param)
         if loginResult["code"] == "SUCC":
             # 세션 설정
@@ -43,7 +42,7 @@ async def loginProc(request: Request, response: Response, param: dict = Body(...
 @router.post("/dyscm/member/signUp/searchPartnerProc.do")
 async def searchPartnerProc(request: Request, response: Response, param: dict = Body(...)):
     try:
-        memberService = MemberService.getInstance(dbManagers.get('mariaDb'))
+        memberService = MemberService.getInstance()
         result = await memberService.searchPartnerProc(param)
         return result
     except Exception as e:
@@ -60,7 +59,7 @@ async def searchPartnerProc(request: Request, response: Response, param: dict = 
 @router.post("/dyscm/member/signUp/searchCompanyListProc.do")
 async def searchCompanyListProc(request: Request, response: Response, param: dict = Body(...)):
     try:
-        memberService = MemberService.getInstance(dbManagers.get('mariaDb'))
+        memberService = MemberService.getInstance()
         result = await memberService.searchCompanyListProc(param)
         return result
     except Exception as e:
@@ -77,7 +76,7 @@ async def searchCompanyListProc(request: Request, response: Response, param: dic
 @router.post("/dyscm/member/signUp/idCheckProc.do")
 async def idCheckProc(request: Request, response: Response, param: dict = Body(...)):
     try:
-        memberService = MemberService.getInstance(dbManagers.get('mariaDb'))
+        memberService = MemberService.getInstance()
         result = await memberService.idCheckProc(param)
         return result
     except Exception as e:
@@ -94,7 +93,7 @@ async def idCheckProc(request: Request, response: Response, param: dict = Body(.
 @router.post("/dyscm/member/signUp/signUpProc.do")
 async def signUpProc(request: Request, response: Response, param: dict = Body(...)):
     try:
-        memberService = MemberService.getInstance(dbManagers.get('mariaDb'))
+        memberService = MemberService.getInstance()
         result = await memberService.signUpProc(param)
         return result
     except Exception as e:

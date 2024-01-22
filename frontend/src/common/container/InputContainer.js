@@ -12,7 +12,7 @@ export const InputContainer = React.forwardRef(({ urrentRecord, totalRecords, ti
             {/* 레코드 표시 span */}
             {/*<span style={{ fontSize: '21px' }}>{currentRecord} / {totalRecords}</span>*/}
             <h2 style={{ fontSize: '23px', fontWeight: 'bold', marginTop: '20px', color: '#45474A' }}>{title}</h2>
-            <p style={{ fontSize: '17px', marginTop: '10px', color: '#45474A' }}>{description}</p>
+            <p style={{ fontSize: '15px', marginTop: '10px', color: '#9e9e9e' }}>{description}</p>
             {/* 다른 컴포넌트를 넣을 수 있는 공간 */}
             {children}
         </div>

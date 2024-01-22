@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Body, Request, Response
-from common.Database import dbManagers
 from service.HeaderService import HeaderService
 from common.Logger import logger
 
@@ -28,7 +27,7 @@ async def makeHeaderDataProc(request: Request, response: Response):
         param['CD_DFLT_REG_BIZ_AREA'] = cdDfltRegBizArea
         param['CD_DFLT_ITEM'] = cdDfltItem
 
-        headerService = HeaderService.getInstance(dbManagers.get('mariaDb'))
+        headerService = HeaderService.getInstance()
         result = await headerService.makeHeaderDataProc(param)
 
         return result
@@ -53,7 +52,7 @@ async def updateHeaderDataProc(request: Request, response: Response, param: dict
         request.session['CD_DFLT_REG_BIZ_AREA'] = param["CD_DFLT_REG_BIZ_AREA"]
         request.session['CD_DFLT_ITEM'] = param["CD_DFLT_ITEM"]
 
-        headerService = HeaderService.getInstance(dbManagers.get('mariaDb'))
+        headerService = HeaderService.getInstance()
         result = await headerService.updateHeaderDataProc(param)
 
         return result

@@ -16,7 +16,7 @@ const SignUp = () => {
     // 컴포넌트 크기 및 커스텀 placeholdr스타일
     const CheckboxHeight = '90px';
     const ButtonHeight = '100px';
-    const LocalFooterHeight = CheckboxHeight + ButtonHeight;
+    const LocalFooterHeight = `(${CheckboxHeight} + ${ButtonHeight})`;
 
     // 회원가입에 사용할 dataset: 상태관리를 통해 값 변경시 바로 UI에 반영
     const [listItems, setListItems] = useState(new Basic.AppMap
@@ -486,7 +486,7 @@ const SignUp = () => {
             {/* Top에 헤더 표출 */}
             <Header leftContent={{ image: "/resource/images/icons/header/ic-history.svg", text: "회원가입" }} useRightContent={false}
                 style={{ border: '1px solid lightgrey' }} />
-            <div className="d-flex flex-fill" style={{ height: `calc(100vh - (${HeaderHeight} + ${LocalFooterHeight})` }}> {/* 높이를 동적으로 계산 */}
+            <div className="d-flex flex-fill" style={{ height: `calc(100vh - ${HeaderHeight} - ${LocalFooterHeight}` }}> {/* 높이를 동적으로 계산 */}
                 <div className="d-flex flex-column" style={{ width: '486px' }}> {/* 사이드바 너비 고정 */}
                     <div className="flex-grow-1 overflow-auto" style={{ marginBottom: '10px' }}> {/* overflow-auto를 통해 스크롤 적용 */}
                         <LeftSidebar items={listItems} onItemClick={handleListItemClick} /> {/* LeftSidebar 클릭시 항목 이동을 위해 핸들러 연결 */}
