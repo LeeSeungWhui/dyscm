@@ -1,4 +1,5 @@
 export { AppMap } from './AppMap';
+export { AppArray } from './AppArray';
 export { AppInput } from './AppInput';
 export { AppButton } from './AppButton';
 export { AppToggle } from './AppToggle';

@@ -25,24 +25,24 @@ const BoxOrder = () => {
     2. state간 연결
     -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     // leftsidebar key와 inputcontainer key를 연결하는 참조배열 생성
-    useEffect(() => {
-        const visibleItems = Array.from(listItems).filter(([, value]) => value.inputVisible);
-        const nextScrollRefs = { ...scrollRefs };
-        const nextFocusRefs = { ...focusRefs };
+    // useEffect(() => {
+    //     const visibleItems = Array.from(listItems).filter(([, value]) => value.inputVisible);
+    //     const nextScrollRefs = { ...scrollRefs };
+    //     const nextFocusRefs = { ...focusRefs };
 
-        visibleItems.forEach(([key, _]) => {
-            const realKey = (key === 'NM_PARTNER' ? 'NO_COMPANY' : key);
-            if (!nextScrollRefs[realKey]) {
-                nextScrollRefs[realKey] = React.createRef();
-            }
-            if (!nextFocusRefs[realKey]) {
-                nextFocusRefs[realKey] = React.createRef();
-            }
-        });
+    //     visibleItems.forEach(([key, _]) => {
+    //         const realKey = (key === 'NM_PARTNER' ? 'NO_COMPANY' : key);
+    //         if (!nextScrollRefs[realKey]) {
+    //             nextScrollRefs[realKey] = React.createRef();
+    //         }
+    //         if (!nextFocusRefs[realKey]) {
+    //             nextFocusRefs[realKey] = React.createRef();
+    //         }
+    //     });
 
-        setScrollRefs(nextScrollRefs);
-        setFocusRefs(nextFocusRefs);
-    }, [dataState]);
+    //     setScrollRefs(nextScrollRefs);
+    //     setFocusRefs(nextFocusRefs);
+    // }, [dataState]);
     /*------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ 
     3. 함수 선언
     -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/

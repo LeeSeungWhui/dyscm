@@ -3,22 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Image, Form } from 'react-bootstrap';
 import * as AppConfig from '../common/config';
 import * as Basic from '../common/basic';
+import { loginData } from '../common/InitDataSet';
 
 const Login = () => {
   /* 1. 변수 및 state 선언------------------------------------------------------------------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
 
   // 백엔드로 요청할 데이터를 상태로 선언
-  const [dataState, setDataState] = useState(new Basic.AppMap
-    // [key, { value, description, type }]
-    ([
-      ['ID_MEMBER',
-        { value: "", description: "아이디를 입력해주세요.", type: "text" }],
-      ['LOGIN_PWD',
-        { value: "", description: "비밀번호를 입력해주세요.", type: "password" }],
-      ['LOGIN_SAVE',
-        { value: "false", description: "로그인 정보 기억하기", type: "checkbox" }]
-    ]));
+  const [dataState, setDataState] = useState(Basic.AppArray.fromArray(loginData));
 
   /* 2. state간 연결------------------------------------------------------------------------------------------------------------------------------------------------*/
   /* 3. 함수 선언 ------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -37,11 +29,12 @@ const Login = () => {
 
   const handleLoginButtonClick = async (event) => {
     event.preventDefault();
-    if (!dataState["ID_MEMBER"].value || !dataState["LOGIN_PWD"].value) {
+    if (!dataState.get("ID_MEMBER").value || !dataState.get("LOGIN_PWD").value) {
       alert("아이디와 비밀번호를 입력해주세요.");
       return;
     }
     // 로그인 요청
+    console.log(dataState.toJSON('value'));
     try {
       const result = await AppConfig.ajax('/dyscm/member/loginProc.do', 'POST', dataState.toJSON('value'))
       if (result.code === "SUCC") {
