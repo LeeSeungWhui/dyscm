@@ -3,7 +3,7 @@ import React from 'react';
 import { css } from '@emotion/react';
 
 import * as AppConfig from '../config'
-export const AppButton = React.forwardRef(({ backgroundColor, borderColor, style, onClick, children }, ref) => {
+export const AppButton = React.forwardRef(({ backgroundColor, borderColor, style, onClick, children, isSearch, isPlus }, ref) => {
     /* 1. 변수 및 state 선언------------------------------------------------------------------------------------------------------------------------------------------------*/
     // 기본배경색
     const defaultBg = backgroundColor || AppConfig.APP_THEME_COLOR;
@@ -47,6 +47,20 @@ export const AppButton = React.forwardRef(({ backgroundColor, borderColor, style
     // 부모 컴포넌트에서 전달된 style이 있는 경우 기본 스타일에 덮어씌움
     const combinedStyle = style ? { ...defaultStyle, ...style } : defaultStyle;
 
+    // 아이콘
+    let icon;
+    if (isSearch) {
+        icon = <img src="/resource/images/icons/button/ic-search-white.svg" alt="Search Icon" />;
+    } else if (isPlus) {
+        icon = <img src="/resource/images/icons/button/ic-plus-white.svg" alt="Plus Icon" />;
+    }
+
+    // 아이콘 스타일
+    const iconStyle = css`
+        margin-right: 8px; // 아이콘과 텍스트 사이 간격
+        vertical-align: middle; // 아이콘 수직 정렬
+    `;
+
     /* 2. state간 연결------------------------------------------------------------------------------------------------------------------------------------------------*/
     /* 3. 함수 선언 ------------------------------------------------------------------------------------------------------------------------------------------------*/
     /* 4. 이벤트핸들러------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -59,6 +73,7 @@ export const AppButton = React.forwardRef(({ backgroundColor, borderColor, style
             onClick={onClick}
             ref={ref}
         >
+            {icon && <span css={iconStyle}>{icon}</span>}
             {children}
         </button>
     );

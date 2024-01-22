@@ -1,4 +1,4 @@
-from common.Database import DatabaseManager
+from common.Database import dbManagers
 from common.Logger import logger
 import bcrypt
 
@@ -7,17 +7,18 @@ class MemberService:
     _instance = None
 
     @classmethod
-    def getInstance(cls, dbManager: DatabaseManager):
+    def getInstance(cls):
         if cls._instance is None:
-            cls._instance = cls(dbManager)
+            cls._instance = cls()
         return cls._instance
 
-    def __init__(self, dbManager: DatabaseManager):
-        self.dbManager = dbManager
+    def __init__(self):
+        return
 
     # 로그인
     async def loginCheckProc(self, param: dict):
-        data = await self.dbManager.fetchOneQuery("select.logincheck", param)
+        dbManager = dbManagers['mariaDb']
+        data = await dbManager.fetchOneQuery("select.logincheck", param)
 
         # 아이디 확인
         if not data:
@@ -59,7 +60,8 @@ class MemberService:
 
     # 사업자번호로 업체 조회
     async def searchPartnerProc(self, param: dict):
-        data = await self.dbManager.fetchOneQuery("select.searchpartner", param)
+        dbManager = dbManagers['mariaDb']
+        data = await dbManager.fetchOneQuery("select.searchpartner", param)
         if not data:
             return {"data": data,
                     "code": "FAIL",
@@ -73,7 +75,8 @@ class MemberService:
 
     # 업체별 거래가능 공장 목록 조회
     async def searchCompanyListProc(self, param: dict):
-        data = await self.dbManager.fetchAllQuery("select.searchcompanylist", param)
+        dbManager = dbManagers['mariaDb']
+        data = await dbManager.fetchAllQuery("select.searchcompanylist", param)
         if not data:
             return {"data": data,
                     "code": "FAIL",
@@ -88,7 +91,8 @@ class MemberService:
 
     # 아이디 중복 조회
     async def idCheckProc(self, param: dict):
-        data = await self.dbManager.fetchOneQuery("select.idcheck", param)
+        dbManager = dbManagers['mariaDb']
+        data = await dbManager.fetchOneQuery("select.idcheck", param)
         if not data:
             return {"data": "VALID",
                     "code": "SUCC",
@@ -102,8 +106,9 @@ class MemberService:
 
     # 회원 가입
     async def signUpProc(self, param: dict):
+        dbManager = dbManagers['mariaDb']
         # 거래사업장 정보(법인코드, 거래품목) 가져오기
-        partnerBizList = await self.dbManager.fetchAllQuery("select.partnerbizlist", param)
+        partnerBizList = await dbManager.fetchAllQuery("select.partnerbizlist", param)
 
         #####################################
         # [{'CD_COMPANY': '6000', 'CD_REG_BIZ_AREA': '6300', 'CLS_ITEM1': '20'}]

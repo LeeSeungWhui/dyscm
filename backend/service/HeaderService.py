@@ -1,4 +1,4 @@
-from common.Database import DatabaseManager
+from common.Database import dbManagers
 from common.Logger import logger
 
 
@@ -6,13 +6,12 @@ class HeaderService:
     _instance = None
 
     @classmethod
-    def getInstance(cls, dbManager: DatabaseManager):
+    def getInstance(cls):
         if cls._instance is None:
-            cls._instance = cls(dbManager)
+            cls._instance = cls()
         return cls._instance
 
-    def __init__(self, dbManager: DatabaseManager):
-        self.dbManager = dbManager
+    def __init__(self):
         self.itemNmDict = {
             'A': '전체',
             'S': '원단',
@@ -21,8 +20,9 @@ class HeaderService:
 
     # 헤더 데이터 만들기
     async def makeHeaderDataProc(self, param: dict):
+        dbManager = dbManagers['mariaDb']
         # m_map_partner에서 거래 사업장 정보 가져오기
-        bizInfoList = await self.dbManager.fetchAllQuery("select.mappartner", param)
+        bizInfoList = await dbManager.fetchAllQuery("select.mappartner", param)
         if not bizInfoList:
             return {"data": None,
                     "code": "FAIL",
@@ -86,13 +86,14 @@ class HeaderService:
         return result
 
     async def updateHeaderDataProc(self, param: dict):
-        result = await self.dbManager.executeQuery("update.dfltbizinfo", param)
+        dbManager = dbManagers['mariaDb']
+        result = await dbManager.executeQuery("update.dfltbizinfo", param)
         if not result:
             return {"data": "INVALID",
                     "code": "NONE",
-                    "msg": "업데이트할 항목이 없습니다."
+                    "msg": "업데이트 할 항목이 없습니다."
                     }
         return {"data": "VALID",
                 "code": "SUCC",
-                "msg": "회원 가입에 성공했습니다. 로그인 페이지로 이동합니다."
+                "msg": "업데이트에 성공했습니다."
                 }

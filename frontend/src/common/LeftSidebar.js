@@ -19,9 +19,9 @@ const LeftSidebar = ({ items, onItemClick }) => {
     <ListGroup as="ul" className="d-flex flex-column" >
       {visibleItems.map(([key, { title, value, description, type, useBorder = 'true', useImage = 'true', color = 'lightgrey' }]) => (
         <ListGroup.Item as="li" key={key} className="d-flex justify-content-between align-items-center" onClick={() => handleListItemClick(key)}
-          style={{ height: useBorder ? '75px' : '45px', cursor: 'pointer', borderRadius: '0px', border: `${useBorder ? 'undefined' : 'transparent'}` }}>
+          style={{ height: useBorder && useImage ? '75px' : '55px', cursor: 'pointer', borderRadius: '0px', border: `${useBorder ? 'undefined' : 'transparent'}` }}>
           <div className="ms-2 me-auto">
-            <div className="fw-bold">{title}</div>
+            <div className="fw-bold" style={{ fontSize: '17px' }}>{title}</div>
           </div>
           <span style={{ fontSize: '14px', fontWeight: 'bold', color: color, display: 'inline-block', width: '60%', textAlign: 'right', marginRight: '10px' }}>
             {value ? (type === 'password' ? '•'.repeat(value.length) : value) : description}
